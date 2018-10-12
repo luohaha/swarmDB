@@ -77,6 +77,8 @@ namespace bzn
 
         uint64_t get_high_water_mark();
 
+        bool is_view_valid() const;
+
     private:
         std::shared_ptr<pbft_operation> find_operation(uint64_t view, uint64_t sequence, const pbft_request& request);
         std::shared_ptr<pbft_operation> find_operation(const pbft_msg& msg);
@@ -137,6 +139,7 @@ namespace bzn
         // Using 1 as first value here to distinguish from default value of 0 in protobuf
         uint64_t view = 1;
         uint64_t next_issued_sequence_number = 1;
+        bool     view_is_valid = true;
         uint64_t first_sequence_to_execute = 0;
         bool joined_swarm = false;
 

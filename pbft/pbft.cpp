@@ -213,6 +213,11 @@ pbft::handle_message(const pbft_msg& msg, const wrapped_bzn_msg& original_msg)
 bool
 pbft::preliminary_filter_msg(const pbft_msg& msg)
 {
+    if(!this->is_view_valid())
+    {
+        return false;
+    }
+
     auto t = msg.type();
     if (t == PBFT_MSG_PREPREPARE || t == PBFT_MSG_PREPARE || t == PBFT_MSG_COMMIT)
     {
@@ -601,6 +606,7 @@ pbft::handle_failure()
     LOG(fatal) << "Failure detected; view changes not yet implemented\n";
     this->notify_audit_failure_detected();
     //TODO: KEP-332
+    this->view_is_valid = false;
 }
 
 void
@@ -827,6 +833,12 @@ uint64_t
 pbft::get_high_water_mark()
 {
     return this->high_water_mark;
+}
+
+bool
+pbft::is_view_valid() const
+{
+    return this->view_is_valid;
 }
 
 std::string
