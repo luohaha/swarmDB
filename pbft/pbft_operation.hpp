@@ -25,7 +25,7 @@ namespace bzn
 {
     using hash_t = std::string;
     // View, sequence
-    using operation_key_t = std::tuple<uint64_t, uint64_t, hash_t>;
+    using operation_key_t = std::tuple<uint64_t, uint64_t, hash_t>; // view #, seq#,
 
     // View, sequence
     using log_key_t = std::tuple<uint64_t, uint64_t>;
@@ -77,8 +77,10 @@ namespace bzn
         pbft_operation_state state = pbft_operation_state::prepare;
 
         bool preprepare_seen = false;
-        std::set<bzn::uuid_t> prepares_seen;
-        std::set<bzn::uuid_t> commits_seen;
+
+        // TODO the following strings are serialized wrapped bzn messages
+        std::map<bzn::uuid_t, std::string> prepares_seen;
+        std::map<bzn::uuid_t, std::string> commits_seen;
 
         std::weak_ptr<bzn::session_base> listener_session;
 
