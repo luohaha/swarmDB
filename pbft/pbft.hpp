@@ -34,6 +34,7 @@ namespace
     const double HIGH_WATER_INTERVAL_IN_CHECKPOINTS = 2.0; //TODO: KEP-574
 }
 
+
 namespace bzn
 {
     using request_hash_t = std::string;
