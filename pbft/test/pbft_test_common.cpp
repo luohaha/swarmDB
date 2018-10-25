@@ -176,7 +176,7 @@ namespace bzn::test
 
         return msg.type() == PBFT_MSG_CHECKPOINT && msg.sequence() > 0 && extract_sender(*wrapped_msg) != "" && msg.state_hash() != "";
     }
-
+    
     bool
     is_audit(std::shared_ptr<std::string> msg)
     {
@@ -189,6 +189,20 @@ namespace bzn::test
         }
 
         return json["bzn-api"] == "audit";
+    }
+
+    bool
+    is_viewchange(std::shared_ptr<std::string> wrapped_msg)
+    {
+        pbft_msg msg = extract_pbft_msg(*wrapped_msg);
+        return msg.type() == PBFT_MSG_VIEWCHANGE;
+    }
+
+    bool
+    is_newview(std::shared_ptr<std::string> wrapped_msg)
+    {
+        pbft_msg msg = extract_pbft_msg(*wrapped_msg);
+        return msg.type() == PBFT_MSG_NEWVIEW;
     }
 
     wrapped_bzn_msg

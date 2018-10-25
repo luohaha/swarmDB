@@ -80,6 +80,11 @@ namespace bzn
 
         bool is_view_valid() const;
 
+        bool is_valid_viewchange_message(const pbft_msg& msg) const;
+        bool is_valid_newview_message(const pbft_msg& msg) const;
+
+        uint64_t get_view() const { return this->view; }
+
     private:
         std::shared_ptr<pbft_operation> find_operation(uint64_t view, uint64_t sequence, const pbft_request& request);
         std::shared_ptr<pbft_operation> find_operation(const pbft_msg& msg);
@@ -94,6 +99,8 @@ namespace bzn
         void handle_checkpoint(const pbft_msg& msg, const wrapped_bzn_msg& original_msg);
         void handle_join_or_leave(const pbft_membership_msg& msg);
         void handle_config_message(const pbft_msg& msg, const std::shared_ptr<pbft_operation>& op);
+        void handle_viewchange(const pbft_msg& msg, const wrapped_bzn_msg& original_msg);
+        void handle_newview(const pbft_msg& msg, const wrapped_bzn_msg& original_msg);
 
         void maybe_advance_operation_state(const std::shared_ptr<pbft_operation>& op);
         void do_preprepare(const std::shared_ptr<pbft_operation>& op);
@@ -202,6 +209,9 @@ namespace bzn
         friend class pbft_proto_test;
 
         std::shared_ptr<crypto_base> crypto;
+
+        std::set<std::string> valid_view_change_messages; // should this be in operation?
+        std::set<std::string> valid_new_view_messages; // should this be in operation?
     };
 
 } // namespace bzn
