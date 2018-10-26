@@ -42,9 +42,8 @@ pbft_operation::has_preprepare()
 void
 pbft_operation::record_prepare(const wrapped_bzn_msg& encoded_prepare)
 {
-    // TODO: Save message
     this->prepares_seen.insert(encoded_prepare.sender());
-    this->prepare_messages.insert(encoded_prepare.SerializeAsString());
+    this->prepare_messages.insert(std::make_pair(encoded_prepare.sender(), encoded_prepare.payload()));
 }
 
 size_t
