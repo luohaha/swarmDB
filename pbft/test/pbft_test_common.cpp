@@ -176,7 +176,7 @@ namespace bzn::test
 
         return msg.type() == PBFT_MSG_CHECKPOINT && msg.sequence() > 0 && extract_sender(*wrapped_msg) != "" && msg.state_hash() != "";
     }
-    
+
     bool
     is_audit(std::shared_ptr<std::string> msg)
     {
